@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TourismApp.Application.Commands;
 using TourismApp.Domain.Interfaces;
+using TourismApp.Infrastructure.Repositories;
 using TourismApp.Persistence.Data;
 using TourismApp.Persistence.Repositories;
 
@@ -15,6 +16,7 @@ builder.Services.AddDbContext<TourContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSQLConnection")));
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateTourCommandHandler).Assembly));
 builder.Services.AddScoped<ITourRepository, TourRepository>();
+builder.Services.AddScoped<ITourProductRepository, TourProductRepository>();
 
 
 

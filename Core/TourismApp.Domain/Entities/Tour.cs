@@ -17,5 +17,6 @@ namespace TourismApp.Domain.Entities
         public int NightNum { get; set; }
         public List<TourImage> Gallery { get; set; } = new List<TourImage>(); // 1 to many relation
         public bool IsActive { get; set; }
+        public List<TourProduct> TourProducts { get; set; }
     }
 }
