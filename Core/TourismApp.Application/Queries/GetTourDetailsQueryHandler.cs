@@ -25,6 +25,8 @@ namespace TourismApp.Application.Tours.Queries
                 throw new Exception("Tour not found"); // Or handle the not found case as needed
             }
 
+            var currentDate = DateTime.UtcNow;
+
             var tourDetailsDto = new TourDetailsDTO
             {
                 Id = tour.Id,
@@ -35,7 +37,18 @@ namespace TourismApp.Application.Tours.Queries
                 DayNum = tour.DayNum,
                 NightNum = tour.NightNum,
                 IsActive = tour.IsActive,
-                GalleryImages = tour.Gallery
+                GalleryImages = tour.Gallery,
+                TourProducts = tour.TourProducts
+                    .Where(tp => tp.SalesEndDate >= currentDate)
+                    .Select(tp => new TourProductDto
+                    {
+                        Id = tp.Id,
+                        TourId = tp.TourId,
+                        SalesStartDate = tp.SalesStartDate,
+                        SalesEndDate = tp.SalesEndDate,
+                        TourStartDate = tp.TourStartDate,
+                        TourEndDate = tp.TourEndDate
+                    }).ToList()
             };
 
             return tourDetailsDto;

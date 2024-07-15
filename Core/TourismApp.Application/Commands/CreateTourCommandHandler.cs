@@ -29,7 +29,7 @@ namespace TourismApp.Application.Commands
                 DayNum = request.DayNum,
                 NightNum = request.NightNum,
                 IsActive = request.IsActive,
-                Gallery = request.Gallery,
+                Gallery = request.Gallery
             };
 
             await _tourRepository.AddTourAsync(tour);

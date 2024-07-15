@@ -70,5 +70,17 @@ namespace TourismApp.API.Controllers
 
             return NoContent();
         }
+
+        [HttpPost("{id}/gallery")]
+        public async Task<IActionResult> AddToGallery(Guid id, [FromBody] string imageUrl)
+        {
+            // Validate inputs, authorize user, etc.
+
+            var command = new AddToGalleryCommand { TourId = id, ImageUrl = imageUrl };
+            var result = await _mediator.Send(command);
+
+            return Ok(result);
+        }
+
     }
 }

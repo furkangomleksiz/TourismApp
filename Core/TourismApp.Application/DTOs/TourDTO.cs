@@ -9,5 +9,6 @@ namespace TourismApp.Application.DTOs
     {
         public Guid Id { get; set; }
         public string Title { get; set; }
+        public List<TourProductDto> TourProducts { get; set; } = new List<TourProductDto>();
     }
 }

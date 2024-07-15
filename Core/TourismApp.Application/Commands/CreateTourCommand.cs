@@ -15,7 +15,7 @@ namespace TourismApp.Application.Commands
     public string Image { get; set; }
     public int DayNum { get; set; }
     public int NightNum { get; set; }
-    public List<TourImage> Gallery { get; set; }
+    public List<TourImage> Gallery { get; set; } = new List<TourImage>();
     public bool IsActive { get; set; }
 }
 

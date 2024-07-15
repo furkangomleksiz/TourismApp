@@ -19,12 +19,16 @@ namespace TourismApp.Persistence.Repositories
 
         public async Task<Tour> GetTourByIdAsync(Guid id)
         {
-            return await _context.Tours.Include(t => t.Gallery).FirstOrDefaultAsync(t => t.Id == id);
+            return await _context.Tours
+            .Include(t => t.TourProducts.Where(tp => tp.SalesEndDate > DateTime.UtcNow))
+            .Include(t => t.Gallery).FirstOrDefaultAsync(t => t.Id == id);
         }
 
         public async Task<List<Tour>> GetAllToursAsync()
         {
-            return await _context.Tours.Include(t => t.Gallery).ToListAsync();
+            return await _context.Tours
+            .Include(t => t.TourProducts.Where(tp => tp.SalesEndDate > DateTime.UtcNow))
+            .Include(t => t.Gallery).ToListAsync();
         }
 
         public async Task AddTourAsync(Tour tour)

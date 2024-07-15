@@ -15,7 +15,8 @@ namespace TourismApp.Application.DTOs
         public string Image { get; set; }
         public int DayNum { get; set; }
         public int NightNum { get; set; }
-        public List<TourImage> GalleryImages { get; set; }
+        public List<TourImage> GalleryImages { get; set; } = new List<TourImage>();
         public bool IsActive { get; set; }
+        public List<TourProductDto> TourProducts { get; set; } = new List<TourProductDto>();
     }
 }
