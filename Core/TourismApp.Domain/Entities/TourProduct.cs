@@ -16,5 +16,6 @@ namespace TourismApp.Domain.Entities
 
         // Navigation property to Tour entity
         public Tour Tour { get; set; }
+        public DateTime? DeletedAt { get; set; } 
     }
 }

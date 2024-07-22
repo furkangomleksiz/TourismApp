@@ -19,16 +19,30 @@ namespace TourismApp.Persistence.Repositories
 
         public async Task<Tour> GetTourByIdAsync(Guid id)
         {
-            return await _context.Tours
-            .Include(t => t.TourProducts.Where(tp => tp.SalesEndDate > DateTime.UtcNow))
-            .Include(t => t.Gallery).FirstOrDefaultAsync(t => t.Id == id);
+            // Retrieve the tour by Id and ensure it's not deleted
+            var tour = await _context.Tours
+                .Where(t => t.Id == id && t.DeletedAt == null)
+                .Include(t => t.Gallery)
+                .FirstOrDefaultAsync();
+
+            if (tour == null)
+                return null; // Or throw an exception if appropriate
+
+            // Manually filter the related TourProducts after retrieving the tour
+            tour.TourProducts = tour.TourProducts
+                .Where(tp => tp.SalesEndDate > DateTime.UtcNow)
+                .ToList();
+
+            return tour;
         }
 
         public async Task<List<Tour>> GetAllToursAsync()
         {
             return await _context.Tours
-            .Include(t => t.TourProducts.Where(tp => tp.SalesEndDate > DateTime.UtcNow))
-            .Include(t => t.Gallery).ToListAsync();
+                .Include(t => t.TourProducts.Where(tp => tp.SalesEndDate > DateTime.UtcNow && tp.DeletedAt == null))
+                .Include(t => t.Gallery)
+                .Where(t => t.DeletedAt == null)
+                .ToListAsync();
         }
 
         public async Task AddTourAsync(Tour tour)

@@ -20,12 +20,16 @@ namespace TourismApp.Infrastructure.Repositories
 
         public async Task<List<TourProduct>> GetAllAsync()
         {
-            return await _context.TourProducts.ToListAsync();
+            return await _context.TourProducts
+                                .Where(tp => tp.DeletedAt == null)
+                                .ToListAsync();
         }
 
         public async Task<TourProduct> GetByIdAsync(Guid id)
         {
-            return await _context.TourProducts.FindAsync(id);
+            return await _context.TourProducts
+                .Where(tp => tp.Id == id && tp.DeletedAt == null)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<Guid> CreateAsync(TourProduct tourProduct)

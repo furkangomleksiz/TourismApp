@@ -18,5 +18,6 @@ namespace TourismApp.Domain.Entities
         public List<TourImage> Gallery { get; set; } = new List<TourImage>(); // 1 to many relation
         public bool IsActive { get; set; }
         public List<TourProduct> TourProducts { get; set; } = new List<TourProduct>();
+        public DateTime? DeletedAt { get; set; }
     }
 }

@@ -70,5 +70,13 @@ namespace TourismApp.API.Controllers
 
             return NoContent();
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTourProduct(Guid id)
+        {
+            var command = new DeleteTourProductCommand(id);
+            await _mediator.Send(command);
+            return NoContent();
+        }
     }
 }

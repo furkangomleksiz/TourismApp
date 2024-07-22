@@ -71,6 +71,14 @@ namespace TourismApp.API.Controllers
             return NoContent();
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTour(Guid id)
+        {
+            var command = new DeleteTourCommand(id);
+            await _mediator.Send(command);
+            return NoContent();
+        }
+
         [HttpPost("{id}/gallery")]
         public async Task<IActionResult> AddToGallery(Guid id, [FromBody] string imageUrl)
         {
