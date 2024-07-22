@@ -16,5 +16,6 @@ namespace TourismApp.Application.Commands
         public DateTime SalesEndDate { get; set; }
         public DateTime TourStartDate { get; set; }
         public DateTime TourEndDate { get; set; }
+        public decimal Price { get; set; }
     }
 }

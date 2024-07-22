@@ -35,10 +35,12 @@ namespace TourismApp.Application.Tours.Queries
             TourProducts = tour.TourProducts.Where(tp => tp.DeletedAt == null).Select(tp => new TourProductDto
             {
                 Id = tp.Id,
+                TourId = tp.TourId,
                 SalesStartDate = tp.SalesStartDate,
                 SalesEndDate = tp.SalesEndDate,
                 TourStartDate = tp.TourStartDate,
-                TourEndDate = tp.TourEndDate
+                TourEndDate = tp.TourEndDate,
+                Price = tp.Price,
             }).ToList(),
             GalleryImages = tour.Gallery
         };

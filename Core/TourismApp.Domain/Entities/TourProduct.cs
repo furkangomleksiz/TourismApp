@@ -13,6 +13,7 @@ namespace TourismApp.Domain.Entities
         public DateTime SalesEndDate { get; set; }
         public DateTime TourStartDate { get; set; }
         public DateTime TourEndDate { get; set; }
+        public decimal Price { get; set; } 
 
         // Navigation property to Tour entity
         public Tour Tour { get; set; }

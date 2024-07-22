@@ -26,7 +26,8 @@ namespace TourismApp.Application.CommandHandlers
                 SalesStartDate = request.SalesStartDate,
                 SalesEndDate = request.SalesEndDate,
                 TourStartDate = request.TourStartDate,
-                TourEndDate = request.TourEndDate
+                TourEndDate = request.TourEndDate,
+                Price = request.Price,
             };
 
             await _repository.UpdateAsync(tourProduct);
