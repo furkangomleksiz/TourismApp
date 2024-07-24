@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TourismApp.Persistence.Data;
@@ -11,9 +12,11 @@ using TourismApp.Persistence.Data;
 namespace TourismApp.Persistence.Migrations
 {
     [DbContext(typeof(TourContext))]
-    partial class TourContextModelSnapshot : ModelSnapshot
+    [Migration("20240723114540_AddOrders")]
+    partial class AddOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +61,7 @@ namespace TourismApp.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid?>("OrderId")
+                    b.Property<Guid>("OrderId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("PhoneNumber")
@@ -186,12 +189,11 @@ namespace TourismApp.Persistence.Migrations
 
             modelBuilder.Entity("TourismApp.Domain.Entities.Pax", b =>
                 {
-                    b.HasOne("TourismApp.Domain.Entities.Order", "Order")
+                    b.HasOne("TourismApp.Domain.Entities.Order", null)
                         .WithMany("Paxes")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.Navigation("Order");
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TourismApp.Domain.Entities.TourImage", b =>

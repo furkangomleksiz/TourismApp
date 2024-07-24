@@ -21,6 +21,9 @@ builder.Services.AddDbContext<TourContext>(options =>
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateTourCommandHandler).Assembly));
 builder.Services.AddScoped<ITourRepository, TourRepository>();
 builder.Services.AddScoped<ITourProductRepository, TourProductRepository>();
+builder.Services.AddScoped<IPaxRepository, PaxRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
 
 
 
