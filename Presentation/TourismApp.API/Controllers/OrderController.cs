@@ -58,5 +58,24 @@ namespace TourismApp.API.Controllers
 
             return Ok(orders);
         }
+
+        [HttpPut("{id}/status")]
+        public async Task<IActionResult> UpdateOrderStatus(Guid id, [FromBody] UpdateOrderStatusCommand command)
+        {
+            if (id != command.OrderId)
+            {
+                return BadRequest("Order ID mismatch.");
+            }
+
+            await _mediator.Send(command);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> SoftDeleteOrder(Guid id)
+        {
+            await _mediator.Send(new SoftDeleteOrderCommand(id));
+            return NoContent();
+        }
     }
 }

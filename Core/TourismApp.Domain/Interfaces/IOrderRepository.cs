@@ -13,5 +13,8 @@ namespace TourismApp.Domain.Interfaces
         Task<List<Order>> GetOrdersByTourProductIdAsync(Guid tourProductId);
         Task UpdateOrderAsync(Order order);
         Task DeleteOrderAsync(Guid id);
+
+        Task SoftDeleteOrderAsync(Guid orderId);
+        Task UpdateOrderStatusAsync(Guid orderId, OrderStatus newStatus);
     }
 }

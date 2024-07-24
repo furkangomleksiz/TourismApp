@@ -22,14 +22,14 @@ namespace TourismApp.Persistence.Repositories
         {
             return await _context.Orders
                 .Include(o => o.Paxes)
-                .FirstOrDefaultAsync(o => o.Id == id);
+                .FirstOrDefaultAsync(o => o.Id == id && o.DeletedAt == null);
         }
 
         public async Task<List<Order>> GetOrdersByTourProductIdAsync(Guid tourProductId)
         {
             return await _context.Orders
                 .Include(o => o.Paxes)
-                .Where(o => o.TourProductId == tourProductId)
+                .Where(o => o.TourProductId == tourProductId && o.DeletedAt == null)
                 .ToListAsync();
         }
 
@@ -51,6 +51,28 @@ namespace TourismApp.Persistence.Repositories
             if (order != null)
             {
                 _context.Orders.Remove(order);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task SoftDeleteOrderAsync(Guid orderId)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order != null && order.Status == OrderStatus.Cancelled)
+            {
+                order.DeletedAt = DateTime.UtcNow;
+                _context.Orders.Update(order);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task UpdateOrderStatusAsync(Guid orderId, OrderStatus newStatus)
+        {
+            var order = await _context.Orders.FindAsync(orderId);
+            if (order != null)
+            {
+                order.Status = newStatus;
+                _context.Orders.Update(order);
                 await _context.SaveChangesAsync();
             }
         }

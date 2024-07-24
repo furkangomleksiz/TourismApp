@@ -21,5 +21,6 @@ namespace TourismApp.Domain.Entities
         public List<Pax> Paxes { get; set; } = new List<Pax>();
         public OrderStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
+        public DateTime? DeletedAt { get; set; }
     }
 }
