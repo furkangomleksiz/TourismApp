@@ -23,6 +23,11 @@ builder.Services.AddScoped<ITourRepository, TourRepository>();
 builder.Services.AddScoped<ITourProductRepository, TourProductRepository>();
 builder.Services.AddScoped<IPaxRepository, PaxRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<ITourProductPriceRepository, TourProductPriceRepository>();
+builder.Services.AddScoped<IOrderTourRepository, OrderTourRepository>();
+builder.Services.AddScoped<IOrderTourProductRepository, OrderTourProductRepository>();
+builder.Services.AddScoped<IOrderTourProductPriceRepository, OrderTourProductPriceRepository>();
+
 
 
 

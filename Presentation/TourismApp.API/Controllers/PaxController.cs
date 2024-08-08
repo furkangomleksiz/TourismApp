@@ -25,5 +25,23 @@ namespace TourismApp.API.Controllers
             var paxId = await _mediator.Send(command);
             return Ok(paxId);
         }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdatePax(Guid id, [FromBody] UpdatePaxCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest("Pax ID in the URL does not match Pax ID in the request body.");
+            }
+
+            var result = await _mediator.Send(command);
+
+            if (!result)
+            {
+                return NotFound("Pax not found.");
+            }
+
+            return NoContent();
+        }
     }
 }

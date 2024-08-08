@@ -25,7 +25,8 @@ namespace TourismApp.Application.Commands
                 Name = request.Name,
                 Surname = request.Surname,
                 TCKN = request.TCKN,
-                PhoneNumber = request.PhoneNumber
+                PhoneNumber = request.PhoneNumber,
+                DateOfBirth = request.DateOfBirth
             };
 
             await _paxRepository.AddAsync(pax);

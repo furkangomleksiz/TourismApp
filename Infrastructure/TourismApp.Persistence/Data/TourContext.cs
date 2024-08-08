@@ -14,6 +14,11 @@ namespace TourismApp.Persistence.Data
         public DbSet<TourProduct> TourProducts { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Pax> Paxes { get; set; }
+        public DbSet<TourProductPrice> TourProductPrices { get; set; }
+        public DbSet<OrderTour> OrderTours { get; set; }
+        public DbSet<OrderTourProduct> OrderTourProducts { get; set; }
+        public DbSet<OrderTourProductPrice> OrderTourProductPrices { get; set; }
+
 
 
         public TourContext(DbContextOptions<TourContext> options)
@@ -53,7 +58,48 @@ namespace TourismApp.Persistence.Data
                 .HasForeignKey(p => p.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<OrderTour>()
+                .HasKey(ot => ot.Id);
 
+            modelBuilder.Entity<OrderTour>()
+                .HasOne(ot => ot.Order)
+                .WithMany()
+                .HasForeignKey(ot => ot.OrderId);
+
+            modelBuilder.Entity<OrderTour>()
+                .HasOne(ot => ot.Tour)
+                .WithMany()
+                .HasForeignKey(ot => ot.TourId);
+
+            modelBuilder.Entity<OrderTourProduct>()
+                .HasKey(otp => new { otp.OrderId, otp.TourProductId });
+
+            modelBuilder.Entity<OrderTourProduct>()
+                .HasOne(otp => otp.Order)
+                .WithMany()
+                .HasForeignKey(otp => otp.OrderId);
+
+            modelBuilder.Entity<OrderTourProduct>()
+                .HasOne(otp => otp.TourProduct)
+                .WithMany()
+                .HasForeignKey(otp => otp.TourProductId);
+
+            modelBuilder.Entity<OrderTourProductPrice>()
+                .HasKey(otpp => new { otpp.OrderId, otpp.TourProductPriceId });
+
+            modelBuilder.Entity<OrderTourProductPrice>()
+                .HasOne(otpp => otpp.Order)
+                .WithMany()
+                .HasForeignKey(otpp => otpp.OrderId);
+
+            modelBuilder.Entity<OrderTourProductPrice>()
+                .HasOne(otpp => otpp.TourProductPrice)
+                .WithMany()
+                .HasForeignKey(otpp => otpp.TourProductPriceId);
+
+            modelBuilder.Entity<TourProductPrice>()
+                .Property(tpp => tpp.PriceType)
+                .HasConversion<string>();
 
             base.OnModelCreating(modelBuilder);
         }

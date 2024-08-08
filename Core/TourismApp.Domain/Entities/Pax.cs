@@ -12,6 +12,7 @@ namespace TourismApp.Domain.Entities
         public string Surname { get; set; }
         public string TCKN { get; set; }
         public string PhoneNumber { get; set; }
+        public DateTime DateOfBirth { get; set; }
         public Guid? OrderId { get; set; }
         public Order? Order { get; set; }
     }

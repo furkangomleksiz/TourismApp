@@ -22,5 +22,8 @@ namespace TourismApp.Domain.Entities
         public OrderStatus Status { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? DeletedAt { get; set; }
+        public ICollection<OrderTour> OrderTours { get; set; }
+        public ICollection<OrderTourProduct> OrderTourProducts { get; set; }
+        public ICollection<OrderTourProductPrice> OrderTourProductPrices { get; set; }
     }
 }
