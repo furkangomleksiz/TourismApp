@@ -17,5 +17,7 @@ namespace TourismApp.Domain.Entities
         // Snapshot properties
         public PriceType PriceType { get; set; }
         public decimal Price { get; set; }
+
+        public ICollection<OrderPayment> OrderPayments { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace TourismApp.Application.Commands
         private readonly IOrderTourRepository _orderTourRepository;
         private readonly IOrderTourProductRepository _orderTourProductRepository;
         private readonly IOrderTourProductPriceRepository _orderTourProductPriceRepository;
+        private readonly IOrderPaymentRepository _orderPaymentRepository;
 
         public CreateOrderCommandHandler(
             IOrderRepository orderRepository,
@@ -28,7 +29,8 @@ namespace TourismApp.Application.Commands
             ITourProductPriceRepository tourProductPriceRepository,
             IOrderTourRepository orderTourRepository,
             IOrderTourProductRepository orderTourProductRepository,
-            IOrderTourProductPriceRepository orderTourProductPriceRepository
+            IOrderTourProductPriceRepository orderTourProductPriceRepository,
+            IOrderPaymentRepository orderPaymentRepository
             )
         {
             _orderRepository = orderRepository;
@@ -39,6 +41,7 @@ namespace TourismApp.Application.Commands
             _orderTourRepository = orderTourRepository;
             _orderTourProductRepository = orderTourProductRepository;
             _orderTourProductPriceRepository = orderTourProductPriceRepository;
+            _orderPaymentRepository = orderPaymentRepository;
         }
 
         public async Task<OrderDTO> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -127,6 +130,17 @@ namespace TourismApp.Application.Commands
                 Price = tourProductPrice.Price
             };
             await _orderTourProductPriceRepository.CreateAsync(orderTourProductPrice);
+
+            var orderPayment = new OrderPayment
+            {
+                Id = Guid.NewGuid(),
+                OrderId = order.Id,
+                TourProductPriceId = tourProductPrice.Id,
+                PaymentType = PaymentType.Payment,
+                Amount = orderTourProductPrice.Price
+            };
+
+            await _orderPaymentRepository.CreateAsync(orderPayment);
 
 
             return new OrderDTO

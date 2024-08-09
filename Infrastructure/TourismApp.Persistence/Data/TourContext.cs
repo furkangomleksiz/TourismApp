@@ -18,6 +18,7 @@ namespace TourismApp.Persistence.Data
         public DbSet<OrderTour> OrderTours { get; set; }
         public DbSet<OrderTourProduct> OrderTourProducts { get; set; }
         public DbSet<OrderTourProductPrice> OrderTourProductPrices { get; set; }
+        public DbSet<OrderPayment> OrderPayments { get; set; }
 
 
 
@@ -100,6 +101,11 @@ namespace TourismApp.Persistence.Data
             modelBuilder.Entity<TourProductPrice>()
                 .Property(tpp => tpp.PriceType)
                 .HasConversion<string>();
+
+            modelBuilder.Entity<OrderPayment>()
+                .HasOne(op => op.OrderTourProductPrice)
+                .WithMany(otp => otp.OrderPayments)
+                .HasForeignKey(op => new { op.OrderId, op.TourProductPriceId });
 
             base.OnModelCreating(modelBuilder);
         }

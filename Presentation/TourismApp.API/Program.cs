@@ -27,6 +27,7 @@ builder.Services.AddScoped<ITourProductPriceRepository, TourProductPriceReposito
 builder.Services.AddScoped<IOrderTourRepository, OrderTourRepository>();
 builder.Services.AddScoped<IOrderTourProductRepository, OrderTourProductRepository>();
 builder.Services.AddScoped<IOrderTourProductPriceRepository, OrderTourProductPriceRepository>();
+builder.Services.AddScoped<IOrderPaymentRepository, OrderPaymentRepository>();
 
 
 
